@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Community reports — Price Truth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="reports">
+  <div class="announcement"><span class="pulse"></span> Price Truth is community-powered · <strong>12,480</strong> reports and counting</div>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" class="brand-symbol"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.8 12h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5S14.2 18.2 12 20.5M12 3.5C9.8 5.8 8.7 8.6 8.7 12s1.1 6.2 3.3 8.5"></path></svg></span><span>price<span class="brand-accent">truth</span></span></a>
+    <nav class="desktop-nav"><a href="index.html">Price board</a><a href="browse.html">Browse prices</a><a class="active" href="reports.html">Community reports</a><a href="#" data-open-report>Report a price <span class="plus">+</span></a></nav>
+    <div class="header-actions"><button class="area-pill" data-area-button><span class="pin">⌖</span> Lagos <span class="chevron">⌄</span></button><button class="menu-button" aria-label="Open menu">☰</button></div>
+  </header>
+  <main class="content-width reports-main">
+    <div class="reports-intro"><div><div class="eyebrow">THE COMMUNITY BOARD</div><h1>Real people. Real reports.</h1><p>See what shoppers around the world paid, where they bought it, and when.</p></div><button class="primary-button" data-open-report>＋ Add your report</button></div>
+    <section class="reports-summary"><div><strong>12,480</strong><span>reports shared</span></div><div><strong>38</strong><span>markets covered</span></div><div><strong>7</strong><span>countries active</span></div><div class="summary-note">Every report helps someone negotiate a fairer price.</div></section>
+    <section class="community-panel"><div class="panel-heading"><div><span class="label">LIVE ACTIVITY</span><h2>Latest community reports</h2></div><span class="live-label"><span class="live-dot"></span> Updating live</span></div><div class="community-list" data-community-list></div></section>
+  </main>
+  <footer class="site-footer content-width"><span>© 2024 price<span class="brand-accent">truth</span></span><span>Built for fairer markets worldwide <span class="heart">♥</span></span><span><a href="#">About</a> · <a href="#">How it works</a></span></footer>
+  <div class="modal-backdrop" data-modal><div class="report-modal" role="dialog"><button class="modal-close" data-close-modal>×</button><div class="modal-kicker">✦ ADD TO THE BOARD</div><h2>What did you pay?</h2><p class="modal-subtitle">Your report helps someone nearby make a fairer deal.</p><form data-report-form><label>What did you buy?<input name="item" required placeholder="e.g. Rice, 50kg bag"></label><div class="form-row"><label>Price paid<input name="price" required type="number" min="1" placeholder="72,500"></label><label>Market<select name="area" data-market-select></select></label></div><label>When did you buy it?<input name="date" type="date"></label><div class="upload-zone"><input id="receipt-input-reports" type="file" accept="image/*"><label for="receipt-input-reports"><span>▧</span><b>Scan a receipt</b><small>Upload a photo and AI will fill this in</small></label></div><button class="primary-button full" type="submit">Publish my report <span>→</span></button></form><div class="success-state" hidden><div class="success-icon">✓</div><h3>Thanks for adding to the truth.</h3><p>Your report is now helping buyers in <span data-success-area>Lagos</span>.</p><button class="secondary-button" data-close-modal>Done</button></div></div></div>
+  <script src="app.js"></script>
+</body>
+</html>
