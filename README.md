@@ -10,7 +10,21 @@ workflow that publishes that directory automatically whenever changes reach
 `main`.
 
 To run it locally, open `public/index.html` in a browser or serve the
-repository with any static web server.
+repository with a static web server such as the VS Code Live Server extension.
+
+## Tools and technologies
+
+- Visual Studio Code
+- HTML5
+- CSS3
+- JavaScript
+- JSON and browser LocalStorage
+- SVG item illustrations
+- Git and GitHub
+- GitHub Pages
+
+This is a frontend-only project and does not require a backend runtime,
+database service, or server credentials to run the current website.
 
 ## GitHub Pages setup
 
