@@ -54,3 +54,6 @@ features and are not part of the current static release.
 Make changes in `public/`, test them in a browser, and keep documentation in
 sync. After reviewing the site locally, commit the changes and push to `main`
 so the GitHub Pages workflow can publish the update.
+
+Pull requests should include a short summary of the user-facing change and
+how it was tested.
