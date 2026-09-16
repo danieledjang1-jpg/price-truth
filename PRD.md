@@ -14,8 +14,8 @@
 
 7. **Price information:** Results show the fair price range, typical price, recent reports, market, date, and price trends.
 
-8. **Price reporting:** Users can submit an item, price, market, date, and optional receipt image.
+8. **Price reporting:** Users submit an item, exact quantity or measurement, price, country, region, market, date, and optional receipt image. Reports are saved locally in the prototype and become available to the chatbot.
 
-9. **AI assistant:** PriceTruth AI answers questions such as “Is this price fair?” using available community price data.
+9. **AI assistant:** PriceTruth AI identifies the item and measurement in each question, filters matching reports, and gives a data-driven answer without inventing prices.
 
 10. **Technology and future:** The prototype uses HTML, CSS, JavaScript, LocalStorage, SVG images, and Visual Studio Code. Future versions will add a real database, user accounts, live prices, receipt scanning, moderation, and mobile apps.

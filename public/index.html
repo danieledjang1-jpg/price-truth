@@ -1,44 +1,202 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Price Truth — Know the fair price</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body data-page="home">
-  <div class="announcement"><span class="pulse"></span> Price Truth is community-powered · <strong>12,480</strong> reports and counting</div>
-  <header class="site-header">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" class="brand-symbol"><circle cx="12" cy="12" r="8.5"></circle><path d="M3.8 12h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5S14.2 18.2 12 20.5M12 3.5C9.8 5.8 8.7 8.6 8.7 12s1.1 6.2 3.3 8.5"></path></svg></span><span>price<span class="brand-accent">truth</span></span></a>
-    <nav class="desktop-nav"><a class="active" href="index.html">Price board</a><a href="browse.html">Browse prices</a><a href="reports.html">Community reports</a><a href="#" data-open-report>Report a price <span class="plus">+</span></a></nav>
-    <div class="header-actions"><button class="area-pill" data-area-button><span class="pin">⌖</span> Lagos <span class="chevron">⌄</span></button><button class="menu-button" aria-label="Open menu">☰</button></div>
-  </header>
-
-  <main>
-    <section class="hero home-hero">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="spark">✦</span> REAL PRICES. REAL PEOPLE.</div>
-        <h1>Know the price.<br><em>Buy with confidence.</em></h1>
-        <p class="hero-lede">See what people are actually paying near you — before you spend a kobo.</p>
-        <form class="search-box large-search" data-search-form>
-          <span class="search-icon">⌕</span><input name="query" type="search" placeholder="What are you looking for?" autocomplete="off"><button type="submit">Search <span>→</span></button>
-        </form>
-        <div class="popular"><span>Popular:</span><a href="results.html?item=rice">Rice</a><a href="results.html?item=tomatoes">Tomatoes</a><a href="results.html?item=cement">Cement</a><a href="results.html?item=transport">Transport</a></div>
-        <div class="popular-items" data-popular-items aria-label="Popular items"></div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Price Truth — Know the fair price</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="home">
+    <div class="announcement">
+      <span class="pulse"></span> Price Truth is community-powered ·
+      <strong>12,480</strong> reports and counting
+    </div>
+    <header class="site-header">
+      <a class="brand" href="index.html"
+        ><span class="brand-mark" aria-hidden="true"
+          ><svg viewBox="0 0 24 24" class="brand-symbol">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path
+              d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Zm-8 0c3 2.8 4.5 6.2 4.5 9S7 18.2 4 21m16 0c-3-2.8-4.5-6.2-4.5-9S17 5.8 20 3"
+            ></path></svg></span
+        ><span>price<span class="brand-accent">truth</span></span></a
+      >
+      <nav class="desktop-nav">
+        <a class="active" href="index.html">Price board</a
+        ><a href="browse.html">Browse prices</a
+        ><a href="reports.html">Community reports</a
+        ><a href="#" data-open-report
+          >Report a price <span class="plus">+</span></a
+        >
+      </nav>
+      <div class="header-actions">
+        <button class="area-pill" data-area-button>
+          <span class="pin">⌖</span> Lagos
+          <span class="chevron">⌄</span></button
+        ><button class="menu-button" aria-label="Open menu">☰</button>
       </div>
-      <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="receipt-card" data-today-board><div class="receipt-top"><span>PRICE TRUTH</span><span data-board-day>01 / 08</span></div><div class="receipt-title">TODAY'S FAIR<br>PRICE BOARD</div><div class="receipt-row"><span>Loading today’s items</span><b>—</b></div><div class="receipt-row"><span>Please wait</span><b>—</b></div><div class="receipt-row"><span>Community reports</span><b>—</b></div><div class="receipt-line"></div><div class="receipt-footer">updating from local reports <span>✦</span></div></div><div class="floating-tag tag-one" data-board-trend>↗ today’s movement</div><div class="floating-tag tag-two live-report"><span class="avatar">A</span> <span data-live-report>Ada just reported</span></div><div class="scribble">pay fair.<br>live well.</div></div>
-    </section>
+    </header>
 
-    <section class="board-section content-width">
-      <div class="section-heading"><div><span class="eyebrow">THE DAILY BOARD · <span class="live-dot"></span> UPDATED TODAY</span><h2>What things cost around you</h2></div><a class="text-link" href="browse.html">View all prices <span>→</span></a></div>
-      <div class="board-grid" data-board-grid></div></section>
-    <section class="trust-strip"><div><strong>12,480</strong><span>reports from<br>people like you</span></div><div><strong>38</strong><span>areas covered<br>across Nigeria</span></div><div><strong>100%</strong><span>independent<br>of sellers</span></div><div class="trust-quote">“Finally, a way to know if I’m being overcharged.” <small>— Tolu, Ikeja</small></div></section>
-  </main>
-  <footer class="site-footer content-width"><span>© 2024 price<span class="brand-accent">truth</span></span><span>Built for fairer markets in Nigeria <span class="heart">♥</span></span><span><a href="#">About</a> · <a href="#">How it works</a></span></footer>
-  <div class="modal-backdrop" data-modal><div class="report-modal" role="dialog" aria-modal="true" aria-labelledby="report-title"><button class="modal-close" data-close-modal>×</button><div class="modal-kicker">✦ ADD TO THE BOARD</div><h2 id="report-title">What did you pay?</h2><p class="modal-subtitle">Your report helps someone nearby make a fairer deal.</p><form data-report-form><label>What did you buy?<input name="item" required placeholder="e.g. Rice, 50kg bag"></label><div class="form-row"><label>Price paid (₦)<input name="price" required type="number" min="1" placeholder="72,500"></label><label>Market<select name="area" data-market-select></select></label></div><label>When did you buy it?<input name="date" type="date"></label><div class="upload-zone"><input id="receipt-input" type="file" accept="image/*"><label for="receipt-input"><span>▧</span><b>Scan a receipt</b><small>Upload a photo and AI will fill this in</small></label></div><button class="primary-button full" type="submit">Publish my report <span>→</span></button></form><div class="success-state" hidden><div class="success-icon">✓</div><h3>Thanks for adding to the truth.</h3><p>Your report is now helping buyers in <span data-success-area>Lagos</span>.</p><button class="secondary-button" data-close-modal>Done</button></div></div></div>
-  <script src="app.js"></script>
-</body>
+    <main>
+      <section class="hero home-hero">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="spark">✦</span> REAL PRICES. REAL PEOPLE.
+          </div>
+          <h1>Know the price.<br /><em>Buy with confidence.</em></h1>
+          <p class="hero-lede">
+            See what people are actually paying near you — before you spend a
+            kobo.
+          </p>
+          <form class="search-box large-search" data-search-form>
+            <span class="search-icon">⌕</span
+            ><input
+              name="query"
+              type="search"
+              placeholder="What are you looking for?"
+              autocomplete="off"
+            /><button type="submit">Search <span>→</span></button>
+          </form>
+          <div class="popular">
+            <span>Popular:</span><a href="results.html?item=rice">Rice</a
+            ><a href="results.html?item=tomatoes">Tomatoes</a
+            ><a href="results.html?item=cement">Cement</a
+            ><a href="results.html?item=transport">Transport</a>
+          </div>
+          <div
+            class="popular-items"
+            data-popular-items
+            aria-label="Popular items"
+          ></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="receipt-card" data-today-board>
+            <div class="receipt-top">
+              <span>PRICE TRUTH</span><span data-board-day>01 / 08</span>
+            </div>
+            <div class="receipt-title">TODAY'S FAIR<br />PRICE BOARD</div>
+            <div class="receipt-row">
+              <span>Loading today’s items</span><b>—</b>
+            </div>
+            <div class="receipt-row"><span>Please wait</span><b>—</b></div>
+            <div class="receipt-row">
+              <span>Community reports</span><b>—</b>
+            </div>
+            <div class="receipt-line"></div>
+            <div class="receipt-footer">
+              updating from local reports <span>✦</span>
+            </div>
+          </div>
+          <div class="floating-tag tag-one" data-board-trend>
+            ↗ today’s movement
+          </div>
+          <div class="floating-tag tag-two live-report">
+            <span class="avatar">A</span>
+            <span data-live-report>Ada just reported</span>
+          </div>
+          <div class="scribble">pay fair.<br />live well.</div>
+        </div>
+      </section>
+
+      <section class="board-section content-width">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow"
+              >THE DAILY BOARD · <span class="live-dot"></span> UPDATED
+              TODAY</span
+            >
+            <h2>What things cost around you</h2>
+          </div>
+          <a class="text-link" href="browse.html"
+            >View all prices <span>→</span></a
+          >
+        </div>
+        <div class="board-grid" data-board-grid></div>
+      </section>
+      <section class="trust-strip">
+        <div>
+          <strong>12,480</strong><span>reports from<br />people like you</span>
+        </div>
+        <div>
+          <strong>38</strong><span>areas covered<br />across Nigeria</span>
+        </div>
+        <div>
+          <strong>100%</strong><span>independent<br />of sellers</span>
+        </div>
+        <div class="trust-quote">
+          “Finally, a way to know if I’m being overcharged.”
+          <small>— Tolu, Ikeja</small>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer content-width">
+      <span>© 2024 price<span class="brand-accent">truth</span></span
+      ><span
+        >Built for fairer markets in Nigeria <span class="heart">♥</span></span
+      ><span><a href="#">About</a> · <a href="#">How it works</a></span>
+    </footer>
+    <div class="modal-backdrop" data-modal>
+      <div
+        class="report-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="report-title"
+      >
+        <button class="modal-close" data-close-modal>×</button>
+        <div class="modal-kicker">✦ ADD TO THE BOARD</div>
+        <h2 id="report-title">What did you pay?</h2>
+        <p class="modal-subtitle">
+          Your report helps someone nearby make a fairer deal.
+        </p>
+        <form data-report-form>
+          <label
+            >What did you buy?<input
+              name="item"
+              required
+              placeholder="e.g. Rice, 50kg bag"
+          /></label>
+          <div class="form-row">
+            <label
+              >Price paid (₦)<input
+                name="price"
+                required
+                type="number"
+                min="1"
+                placeholder="72,500" /></label
+            ><label
+              >Market<select name="area" data-market-select></select
+            ></label>
+          </div>
+          <label>When did you buy it?<input name="date" type="date" /></label>
+          <div class="upload-zone">
+            <input id="receipt-input" type="file" accept="image/*" /><label
+              for="receipt-input"
+              ><span>▧</span><b>Scan a receipt</b
+              ><small>Upload a photo and AI will fill this in</small></label
+            >
+          </div>
+          <button class="primary-button full" type="submit">
+            Publish my report <span>→</span>
+          </button>
+        </form>
+        <div class="success-state" hidden>
+          <div class="success-icon">✓</div>
+          <h3>Thanks for adding to the truth.</h3>
+          <p>
+            Your report is now helping buyers in
+            <span data-success-area>Lagos</span>.
+          </p>
+          <button class="secondary-button" data-close-modal>Done</button>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
 </html>
