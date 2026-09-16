@@ -57,3 +57,6 @@ so the GitHub Pages workflow can publish the update.
 
 Pull requests should include a short summary of the user-facing change and
 how it was tested.
+
+For a quick local preview, use any static file server from the repository
+root so relative assets and navigation behave like the deployed site.
