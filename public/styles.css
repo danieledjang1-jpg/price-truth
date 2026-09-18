@@ -746,6 +746,14 @@ p {
   font-size: 10px;
   margin-top: 12px;
 }
+.unit-slider-label{display:block;margin-top:24px;color:#55715d;font-size:9px;font-weight:700;letter-spacing:.12em}
+.unit-slider{display:block;width:100%;height:22px;margin:6px 0 0;accent-color:#286144;cursor:grab}
+.unit-slider:active{cursor:grabbing}
+.unit-labels{display:flex;justify-content:space-between;gap:8px;color:#607766;font-size:10px}
+.unit-labels span{flex:1;text-align:center}
+.unit-labels span:first-child{text-align:left}
+.unit-labels span:last-child{text-align:right}
+.unit-caption{margin:8px 0 0;color:#667c6a;font-size:11px}
 .results-columns {
   display: grid;
   grid-template-columns: 1fr 315px;

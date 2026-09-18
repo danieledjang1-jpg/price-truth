@@ -689,6 +689,33 @@ Kosovo|🇽🇰|XK|EUR|€
       values.reduce((sum, value) => sum + value, 0) / values.length;
     return { count: values.length, low, high, average };
   }
+  const measurementProfiles = {
+    rice: { base: "50kg bag", units: [{ label: "50kg bag", factor: 1 }, { label: "kg", factor: 1 / 50 }, { label: "cup", factor: 0.185 / 50 }] },
+    beans: { base: "50kg bag", units: [{ label: "50kg bag", factor: 1 }, { label: "kg", factor: 1 / 50 }, { label: "cup", factor: 0.18 / 50 }] },
+    tomatoes: { base: "basket", units: [{ label: "basket", factor: 1 }, { label: "kg", factor: 1 / 25 }, { label: "piece", factor: 1 / 50 }] },
+    pepper: { base: "basket", units: [{ label: "basket", factor: 1 }, { label: "kg", factor: 1 / 20 }, { label: "piece", factor: 1 / 80 }] },
+    "palm oil": { base: "25L jerrycan", units: [{ label: "25L jerrycan", factor: 1 }, { label: "litre", factor: 1 / 25 }, { label: "bottle", factor: 1 / 2 }] },
+    "vegetable oil": { base: "5L bottle", units: [{ label: "5L bottle", factor: 1 }, { label: "litre", factor: 1 / 5 }, { label: "bottle", factor: 1 }] },
+    cement: { base: "50kg bag", units: [{ label: "50kg bag", factor: 1 }, { label: "kg", factor: 1 / 50 }] },
+    eggs: { base: "tray", units: [{ label: "tray", factor: 1 }, { label: "piece", factor: 1 / 30 }] },
+    bread: { base: "loaf", units: [{ label: "loaf", factor: 1 }] },
+    fish: { base: "kg", units: [{ label: "kg", factor: 1 }, { label: "piece", factor: 1 / 3 }] },
+    plantain: { base: "bunch", units: [{ label: "bunch", factor: 1 }, { label: "piece", factor: 1 / 6 }] },
+    transport: { base: "trip", units: [{ label: "trip", factor: 1 }] },
+  };
+  function getMeasurementProfile(item) {
+    return measurementProfiles[item] || { base: "item", units: [{ label: "item", factor: 1 }] };
+  }
+  function formatMeasurePrice(value, unit) {
+    return formatMoney(Math.max(0, value)) + " / " + unit;
+  }
+  function reportPriceInBase(report, profile) {
+    const text = [report.measurement, report.quantity, report.unit].filter(Boolean).join(" ").toLowerCase();
+    const numeric = Number((text.match(/\d+(?:[.,]\d+)?/) || ["1"])[0].replace(",", "."));
+    const unit = profile.units.find((entry) => text.includes(entry.label.toLowerCase().split(" ")[0]));
+    if (!unit) return Number(report.price);
+    return Number(report.price) / (unit.factor * numeric);
+  }
   function buildPromptContext(question, parsed, reports, conversation) {
     const summary = summarizeReports(reports);
     const selectedMarket = selectedMarkets[currentCountryKey()] || country.area;
@@ -1475,8 +1502,22 @@ Kosovo|🇽🇰|XK|EUR|€
     const title = item.charAt(0).toUpperCase() + item.slice(1);
     document.title = title + " prices in " + country.area + " — Price Truth";
     const parsed = parsePriceQuestion(item, null);
-    const reports = findRelevantReports(parsed);
-    const summary = summarizeReports(reports);
+    const profile = getMeasurementProfile(parsed.item || item.toLowerCase());
+    const reports = readSavedReports().filter((report) => {
+      const sameItem = canonicalItem(report.item) === parsed.item;
+      const reportCountry = String(report.countryKey || report.country || report.countryName || "").toLowerCase();
+      const countryMatches = reportCountry.includes(country.name.toLowerCase()) || reportCountry.includes(country.code.toLowerCase()) || reportCountry === currentCountryKey().toLowerCase();
+      const regionMatches = !report.state || String(report.state).toLowerCase() === country.area.toLowerCase();
+      const selectedMarket = selectedMarkets[currentCountryKey()];
+      const marketMatches = !selectedMarket || !report.area || String(report.area).toLowerCase() === String(selectedMarket).toLowerCase();
+      return sameItem && countryMatches && regionMatches && marketMatches;
+    }).sort((a, b) => new Date(b.createdAt || b.date || 0) - new Date(a.createdAt || a.date || 0));
+    const normalizedReports = reports.map((report) => ({ ...report, price: reportPriceInBase(report, profile) }));
+    const reportSummary = summarizeReports(normalizedReports);
+    const hasReports = Boolean(reportSummary);
+    const seedIndexes = { rice: 0, tomatoes: 1, pepper: 2, "palm oil": 3, cement: 4, transport: 5 };
+    const seedPrice = regionalPrice(seedIndexes[parsed.item] ?? 0, currentCountryKey(), selectedStates[currentCountryKey()] || 0);
+    const summary = reportSummary || { count: 0, low: seedPrice * 0.92, high: seedPrice * 1.08, average: seedPrice, estimate: true };
     const low = summary?.low || 0;
     const high = summary?.high || 0;
     const average = summary?.average || 0;
@@ -1484,7 +1525,7 @@ Kosovo|🇽🇰|XK|EUR|€
     const crumb = document.querySelector(".breadcrumbs span:last-child");
     const intro = document.querySelector(".result-top .eyebrow");
     const description = document.querySelector(".result-top .muted");
-    if (heading) heading.innerHTML = title + " <span>· market item</span>";
+    if (heading) heading.innerHTML = title + ' <span data-item-unit>· ' + profile.base + '</span>';
     if (crumb) crumb.textContent = title;
     if (intro)
       intro.innerHTML =
@@ -1501,7 +1542,7 @@ Kosovo|🇽🇰|XK|EUR|€
     const chartImage = document.querySelector(".chart svg");
     if (chartImage)
       chartImage.setAttribute("aria-label", title + " price trend");
-    if (!summary) {
+    if (!hasReports) {
       const chartTitle = document.querySelector(".chart-panel h2");
       if (chartTitle) chartTitle.textContent = "Waiting for matching reports";
       if (chartImage) chartImage.hidden = true;
@@ -1510,12 +1551,10 @@ Kosovo|🇽🇰|XK|EUR|€
       });
       const chartPanel = document.querySelector(".chart-panel");
       if (chartPanel) chartPanel.hidden = true;
-      const rangeVisual = document.querySelector(".range-visual");
-      if (rangeVisual) rangeVisual.hidden = true;
     }
     const reportLink = document.querySelector(".reports-panel .text-link");
     if (reportLink)
-      reportLink.textContent = summary
+      reportLink.textContent = hasReports
         ? "See all " + summary.count + " →"
         : "No matching reports yet";
     const suggestion = document.querySelector(".suggestion");
@@ -1523,22 +1562,48 @@ Kosovo|🇽🇰|XK|EUR|€
       suggestion.firstChild.textContent =
         "Is " + formatMoney(80000) + " fair for " + title.toLowerCase() + "? ";
     const marker = document.querySelector(".marker-label");
-    if (marker) marker.textContent = formatMoney(average);
     const trackLabels = document.querySelectorAll(".track-labels span");
-    if (trackLabels.length >= 2) {
-      trackLabels[0].textContent = formatMoney(low * 0.85);
-      trackLabels[1].textContent = formatMoney(high * 1.15);
-    }
     const range = document.querySelector(".range-price");
-    if (range)
-      range.innerHTML = summary
-        ? formatMoney(low) + " <span>—</span> " + formatMoney(high)
-        : "Not enough reports";
     const typical = document.querySelector(".range-card p strong");
-    if (typical)
-      typical.textContent = summary ? formatMoney(average) : "Awaiting reports";
+    const unitSlider = document.querySelector(".unit-slider");
+    const unitLabels = document.querySelector("[data-unit-labels]");
+    const unitCaption = document.querySelector("[data-unit-caption]");
+    if (unitSlider) {
+      unitSlider.max = String(Math.max(0, profile.units.length - 1));
+      unitSlider.value = "0";
+    }
+    if (unitLabels)
+      unitLabels.innerHTML = profile.units.map((unit) => "<span>" + unit.label + "</span>").join("");
+    const renderMeasure = () => {
+      const selected = profile.units[Number(unitSlider?.value || 0)] || profile.units[0];
+      const multiplier = selected.factor;
+      const selectedLow = low * multiplier;
+      const selectedHigh = high * multiplier;
+      const selectedAverage = average * multiplier;
+      if (heading) {
+        const unitHeading = heading.querySelector("[data-item-unit]");
+        if (unitHeading) unitHeading.textContent = "· " + selected.label;
+      }
+      if (marker) marker.textContent = summary ? formatMoney(selectedAverage) : "—";
+      if (trackLabels.length >= 2) {
+        trackLabels[0].textContent = summary ? formatMoney(selectedLow * 0.85) : "No local data";
+        trackLabels[1].textContent = summary ? formatMoney(selectedHigh * 1.15) : selected.label;
+      }
+      if (range) range.innerHTML = summary ? formatMoney(selectedLow) + " <span>—</span> " + formatMoney(selectedHigh) : "Not enough reports";
+      if (typical) typical.textContent = summary ? formatMoney(selectedAverage) : "Awaiting reports";
+      if (unitCaption) unitCaption.textContent = hasReports ? "Recent price updates shown below are converted to " + selected.label + "." : "Indicative local board estimate shown for " + selected.label + ". Add a report to replace it with community prices.";
+      const markerPosition = summary && selectedHigh > selectedLow ? ((selectedAverage - selectedLow * 0.85) / (selectedHigh * 1.15 - selectedLow * 0.85)) * 100 : 50;
+      const markerElement = document.querySelector(".marker");
+      if (markerElement) markerElement.style.left = Math.max(8, Math.min(92, markerPosition)) + "%";
+      if (marker) marker.style.left = Math.max(8, Math.min(92, markerPosition)) + "%";
+      document.querySelectorAll(".report-row [data-report-price]").forEach((priceElement) => {
+        priceElement.textContent = formatMeasurePrice(Number(priceElement.dataset.basePrice) * multiplier, selected.label);
+      });
+    };
+    if (unitSlider) unitSlider.addEventListener("input", renderMeasure);
+    renderMeasure();
     const rangeNote = document.querySelector(".range-card p");
-    if (rangeNote && summary)
+    if (rangeNote && hasReports)
       rangeNote.insertAdjacentText(
         "afterbegin",
         summary.count +
@@ -1546,9 +1611,9 @@ Kosovo|🇽🇰|XK|EUR|€
           (summary.count === 1 ? "" : "s") +
           ". ",
       );
-    if (rangeNote && !summary)
+    if (rangeNote && !hasReports)
       rangeNote.textContent =
-        "No matching local reports yet. Add the first report for this item and quantity.";
+        "Indicative local board estimate. Add the first report for this item and quantity to show community prices.";
     const reportCount = document.querySelector(".report-count strong");
     const reportCountLabel = document.querySelector(".report-count span");
     if (reportCount)
@@ -1558,7 +1623,7 @@ Kosovo|🇽🇰|XK|EUR|€
     const reportList = document.querySelector(".report-list");
     if (reportList) {
       reportList.innerHTML = "";
-      reports.slice(0, 8).forEach((report) => {
+      normalizedReports.slice(0, 8).forEach((report) => {
         const row = document.createElement("div");
         row.className = "report-row";
         const avatar = document.createElement("span");
@@ -1566,7 +1631,10 @@ Kosovo|🇽🇰|XK|EUR|€
         avatar.textContent = "P";
         const details = document.createElement("div");
         const price = document.createElement("strong");
-        price.textContent = formatMoney(Number(report.price));
+        price.dataset.basePrice = String(Number(report.price));
+        price.dataset.reportPrice = "true";
+        price.setAttribute("data-report-price", "true");
+        price.textContent = formatMeasurePrice(Number(report.price) * profile.units[0].factor, profile.units[0].label);
         const location = document.createElement("span");
         location.textContent =
           (report.area || country.area) + " · " + (report.date || "recently");
