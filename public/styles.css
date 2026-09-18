@@ -1629,3 +1629,60 @@ canvas {
     height: 53px;
   }
 }
+
+/* Responsive refinements for phone-first layouts. */
+.receipt-card {
+  transform-origin: top right;
+  animation: receipt-card-scale 4s ease-in-out infinite;
+}
+@keyframes receipt-card-scale {
+  0%, 100% { transform: rotate(4deg) scale(1); }
+  50% { transform: rotate(4deg) scale(1.04); }
+}
+@media (max-width: 520px) {
+  .announcement { white-space: normal; overflow-wrap: anywhere; text-align: left; padding-left: 14px; padding-right: 14px; }
+  .site-header { height: 72px; padding-left: 16px; padding-right: 12px; gap: 10px; }
+  .brand { flex: 0 1 auto; min-width: 0; white-space: nowrap; }
+  .header-actions { gap: 6px; min-width: 0; }
+  .area-pill { max-width: 92px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 0; }
+  .hero { min-height: 620px; padding-bottom: 30px; overflow: hidden; }
+  .hero-copy { width: 100%; max-width: 100%; z-index: 2; }
+  .hero h1 { font-size: clamp(34px, 10.5vw, 44px); line-height: 1.02; letter-spacing: -1.8px; overflow-wrap: anywhere; }
+  .hero-art { top: 335px; right: -22px; opacity: .72; z-index: 1; }
+  .hero-lede { max-width: 320px; }
+  .popular { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px 12px; line-height: 1.3; }
+  .popular span { flex: 0 0 100%; }
+  .popular a { white-space: nowrap; }
+  .board-grid { grid-template-columns: 1fr; }
+  .trust-strip { grid-template-columns: 1fr 1fr; }
+  .trust-quote { grid-column: 1 / -1; }
+  .results-main, .browse-main, .reports-main { width: calc(100% - 32px); }
+  .range-heading { display: flex; flex-wrap: wrap; }
+  .range-heading > div:first-child { min-width: 0; flex: 1 1 220px; }
+  .results-columns { grid-template-columns: 1fr; }
+  .panel-heading { flex-wrap: wrap; }
+  .panel-heading select { width: 100%; max-width: none; }
+  .reports-summary { grid-template-columns: 1fr 1fr; }
+  .summary-note { grid-column: 1 / -1; padding: 8px 0 0; }
+  .community-panel { padding: 20px 16px; }
+  .community-report { align-items: flex-start; }
+  .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 16px; }
+  .site-footer > span:last-child { width: 100%; }
+  .report-modal { width: calc(100% - 24px); max-height: calc(100vh - 24px); overflow: auto; padding: 24px 18px; }
+  .form-row { grid-template-columns: 1fr; }
+  .mobile-drawer.is-open { transform: translateX(0) !important; transition: none !important; }
+}
+@media (max-width: 380px) {
+  .site-header { padding-left: 12px; padding-right: 8px; }
+  .brand { font-size: 18px; gap: 8px; }
+  .area-pill { max-width: 72px; font-size: 11px; }
+  .hero { padding-left: 14px; padding-right: 14px; }
+  .hero h1 { font-size: 36px; letter-spacing: -1.4px; line-height: 1.04; }
+  .hero-lede { font-size: 13px; max-width: 285px; }
+  .search-box { width: 100%; min-width: 0; }
+  .search-box input { min-width: 0; padding-left: 8px; font-size: 14px; }
+  .search-box button { flex: 0 0 78px; padding: 0 8px; font-size: 11px; }
+  .search-box button span { display: none; }
+  .search-icon { padding: 0 7px; font-size: 20px; }
+  .hero-art { right: -48px; }
+}
